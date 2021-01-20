@@ -1,0 +1,6 @@
+PreOrderTraversal:
+A B D F E C G H I 
+InOrderTraversal:
+D B E F A G H C I 
+PostOrderTraversal:
+D E F B H G I C A 
