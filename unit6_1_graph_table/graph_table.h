@@ -55,6 +55,7 @@ typedef PtrToGNode LGraph; /* 以邻接表方式存储的图类型 */
 LGraph CreateGraph(int VertexNum);
 void InsertEdge(LGraph Graph, Edge E);
 LGraph BuildGraph();
+void PrintGraph(LGraph graph);
 /*
 LGraph CreateGraph(int VertexNum)
 {

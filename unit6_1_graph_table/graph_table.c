@@ -52,23 +52,68 @@ LGraph BuildGraph()
 	Edge E;
 	Vertex V;
 	int Nv, i;
+	printf("please input the vertex number:\n");
 	scanf("%d", &Nv); /* 读入顶点个数 */
+	printf("the vertex number is :%d\n\n", Nv);
 	Graph = CreateGraph(Nv); /* 初始化有Nv个顶点但是没有边的图 */
+
+	printf("please input the edge number:\n");
 	scanf("%d", &(Graph->Ne)); /* 读入边数 */
+	printf("the edge number is :%d\n\n", Graph->Ne);
+
+	printf("please input the edge details:\n");
 	if (Graph->Ne != 0) { /* 如果有边 */
 		E = (Edge) malloc(sizeof(struct ENode)); /* 建立边结点 */
 		/* 读入边， 格式为“起点 终点 权重 ”，插入邻接表 */
 		for (i = 0; i < Graph->Ne; i++) {
 			scanf("%d %d %d", &E->V1, &E->V2, &E->Weight);
 			/* 注意：如果权重不是整型，Weight的读入格式要改 */
+			printf("read edge, start:%d, end:%d, weight:%d\n", E->V1, E->V2, E->Weight);
 			InsertEdge(Graph, E);
 		}
 	}
 
+	printf("\n");
+	printf("please input the vertex data:\n");
 	/* 如果顶点有数据的话，读入数据 */
-	for (V = 0; V < Graph->Nv; V++)
+	for (V = 0; V < Graph->Nv; V++) {
+		setbuf(stdin, NULL);
 		scanf("%c", &(Graph->G[V].Data));
+		printf("vertex %d data is :%c\n", V, Graph->G[V].Data);
+	}
 
 	return Graph;
 }
+
+void PrintGraph(LGraph graph) {
+    printf("start print the graph:\n");
+    int i;
+    for (i = 0; i < graph->Nv; i++) {
+    	printf("vertex: %d data:%c\n", i, graph->G[i].Data);
+    	PtrToAdjVNode node = graph->G[i].FirstEdge;
+    	while (node != NULL) {
+        	printf("linked table, vertex:%d, weight:%d\n", node->AdjV, node->Weight);
+        	node = node->Next;
+    	}
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
