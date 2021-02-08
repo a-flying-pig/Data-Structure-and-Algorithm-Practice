@@ -56,6 +56,7 @@ LGraph CreateGraph(int VertexNum);
 void InsertEdge(LGraph Graph, Edge E);
 LGraph BuildGraph();
 void PrintGraph(LGraph graph);
+LGraph BuildGraphExist();
 /*
 LGraph CreateGraph(int VertexNum)
 {

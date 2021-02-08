@@ -5,7 +5,7 @@
  *      Author: Administrator
  */
 #include "graph_table.h"
-
+#include "LinkedQueue.h"
 
 LGraph CreateGraph(int VertexNum)
 {
@@ -20,6 +20,11 @@ LGraph CreateGraph(int VertexNum)
 	/* 注意：这里默认顶点编号从0开始，到（Graph->Nv - 1) */
 	for (V = 0; V < Graph->Nv; V++)
 		Graph->G[V].FirstEdge = NULL;
+
+    Graph->Visited = (int*) malloc(sizeof(int) * VertexNum);
+    for (int i = 0; i < VertexNum; i++) {
+    	Graph->Visited[i] = 0;
+    }
 
 	return Graph;
 }
@@ -146,12 +151,12 @@ LGraph BuildGraphExist()
 //		scanf("%c", &(Graph->G[V].Data));
 //		printf("vertex %d data is :%c\n", V, Graph->G[V].Data);
 //	}
-	Graph->G[0].Data = '0';
-	Graph->G[1].Data = '1';
-	Graph->G[2].Data = '2';
-	Graph->G[3].Data = '3';
-	Graph->G[4].Data = '4';
-	Graph->G[5].Data = '5';
+	Graph->G[0].Data = 'a';
+	Graph->G[1].Data = 'b';
+	Graph->G[2].Data = 'c';
+	Graph->G[3].Data = 'd';
+	Graph->G[4].Data = 'e';
+	Graph->G[5].Data = 'f';
 
 	return Graph;
 }
@@ -169,11 +174,83 @@ void PrintGraph(LGraph graph) {
     }
 }
 
+void Visit(LGraph Graph, Vertex V)
+{
+	printf("visiting vertex:%d, data:%c\n", V, Graph->G[V].Data);
+}
+
+void DFS( LGraph Graph, Vertex V, void (*VisitFunc)(LGraph, Vertex))
+{
+	VisitFunc(Graph, V);
+	Graph->Visited[V] = 1;
+	//if (V 的所有的连接点未被 访问过) {DFS}
+
+	for (PtrToAdjVNode node = Graph->G[V].FirstEdge; node != NULL; node = node->Next) {
+		if (Graph->Visited[node->AdjV] != 1) {
+			DFS(Graph, node->AdjV, VisitFunc);
+		}
+	}
+}
 
 
+void BFS(LGraph Graph, Vertex V, void (*VisitFunc)(LGraph, Vertex))
+{
+
+    PtrToAdjVNode adjVNode = Graph->G[V].FirstEdge;
+    // 访问该节点，然后添加到队列，以便出队列时寻找其邻接点
+    VisitFunc(Graph, V);
+    Graph->Visited[V] = 1;
+
+    printf("\nenque the first node \n");
+    Queue queue = createQueue();
+    enque(queue, V);
+
+    // 将该节点移出队列，然后将其邻接点中未访问过节点进行访问，然后加入队列，循环，直到所有节点访问完
+    while (!isEmpty(queue)) {
+        Vertex v = deque(queue); // 出队
+        //printf("\ndeque the vertex:%d \n", v);
+
+        // 出队列的结点的所有邻接点进行访问，并将已访问的添加到队列
+        for (PtrToAdjVNode node = Graph->G[v].FirstEdge; node != NULL; node = node->Next) {
+        	//printf("\n print the advNode vertex:%d , visited: %d\n", node->AdjV, Graph->Visited[node->AdjV]);
+            if (Graph->Visited[node->AdjV] != 1) { // 如果未访问过，访问
+            	//printf("\n print the doesn't visit vertex:%d \n", node->AdjV);
+                VisitFunc(Graph, node->AdjV);
+                Graph->Visited[node->AdjV] = 1;
+                enque(queue, node->AdjV); // 访问后添加到队列
+            }
+        }
+    }
+}
 
 
+/*
+void BFS(LGraph Graph, Vertex V, void (*VisitFunc)(LGraph, Vertex))
+{
 
+    PtrToAdjVNode adjVNode = Graph->G[V].FirstEdge;
+
+    printf("\nenque the first node \n");
+    Queue queue = createQueue();
+    enque(queue, V);
+
+    // 将该节点移出队列，进行访问，然后加入其未访问过的邻接点的队列，循环，直到所有节点访问完
+    while (!isEmpty(queue)) {
+        Vertex v = deque(queue); // 出队
+        //printf("\ndeque the vertex:%d \n", v);
+        VisitFunc(Graph, v);
+        Graph->Visited[v] = 1;
+        // 出队列的结点的所有邻接点进行访问，并将访问的添加到队列
+        for (PtrToAdjVNode node = Graph->G[v].FirstEdge; node != NULL; node = node->Next) {
+        	//printf("\n print the advNode vertex:%d , visited: %d\n", node->AdjV, Graph->Visited[node->AdjV]);
+            if (Graph->Visited[node->AdjV] != 1) { // 如果未访问过，添加到队列；未被访问过的顶点可能被多次添加进去，进而造成多次访问。
+            	//printf("\n print the doesn't visit vertex:%d \n", node->AdjV);
+                enque(queue, node->AdjV);
+            }
+        }
+    }
+}
+*/
 
 
 

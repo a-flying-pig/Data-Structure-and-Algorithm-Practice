@@ -10,7 +10,9 @@ int main(int argc, char *argv[])
 {
 	setvbuf(stdout, NULL, _IONBF, 0);
 	printf("hello graph!\n");
-	LGraph graph = BuildGraph();
+	//LGraph graph = BuildGraph();
+
+	LGraph graph = BuildGraphExist();
 	printf("print graph:\n");
 	PrintGraph(graph);
 	printf("print graph end\n");
