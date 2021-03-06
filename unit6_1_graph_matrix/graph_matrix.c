@@ -12,7 +12,12 @@ MGraph CreateGraph(int VertexNum)
 	/* 初始化一个有VertexNum个顶点但没有边的图 */
 	Vertex V, W;
 	MGraph Graph;
-	Graph = (MGraph)malloc(sizeof(struct GNode)); /* 建立图 */
+	Graph = (MGraph) malloc(sizeof(struct GNode)); /* 建立图 */
+	Graph->G =(WeightType**) malloc(sizeof(WeightType*) * VertexNum);
+	for(int i = 0; i < VertexNum; i++) {
+		Graph->G[i] = (WeightType*) malloc(sizeof(WeightType) * VertexNum);
+	}
+	Graph->Data = (DataType*) malloc(sizeof(DataType) * VertexNum);
 	Graph->Nv = VertexNum;
 	Graph->Ne = 0;
 	/* 初始化邻接矩阵 */
@@ -54,7 +59,7 @@ MGraph BuildGraph()
 		for (i = 0; i < Graph->Ne; i++) {
 			scanf("%d %d %d", &E->V1, &E->V2, &E->Weight);
 			 // 注意：如果权重不是整型，Weight的读入格式要改
-			printf("read start:%d, end:%d, weight:%d insert this edge\n", &E->V1, &E->V2, &E->Weight);
+			printf("read start:%d, end:%d, weight:%d insert this edge\n", E->V1, E->V2, E->Weight);
 			InsertEdge(Graph, E);
 		}
 	}

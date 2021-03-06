@@ -24,8 +24,10 @@ typedef struct GNode *PtrToGNode;
 struct GNode{
 	int Nv; /* 顶点数 */
     int Ne; /* 边数 */
-    WeightType G[MaxVertexNum][MaxVertexNum]; /* 邻接矩阵 */
-    DataType Data[MaxVertexNum]; /* 存顶点的数据 */
+    WeightType** G; /* 邻接矩阵 */
+    DataType* Data; /* 存顶点的数据 */
+//    WeightType G[MaxVertexNum][MaxVertexNum]; /* 邻接矩阵 */
+//    DataType Data[MaxVertexNum]; /* 存顶点的数据 */
     /* 注意：很多情况下，顶点无数据，此时Data[]可以不用出现 */
 };
 typedef PtrToGNode MGraph; /* 以邻接矩阵存储的图类型 */
@@ -33,7 +35,15 @@ typedef PtrToGNode MGraph; /* 以邻接矩阵存储的图类型 */
 MGraph CreateGraph(int VertexNum);
 void InsertEdge(MGraph Graph, Edge E);
 MGraph BuildGraph();
-void printGraph(MGraph graph);
+void PrintGraph(MGraph graph);
+MGraph BuildGraphExist();
+
+/* 访问顶点 */
+void Visit(MGraph Graph, Vertex V);
+
+/* Visited[]为全局变量，已经初始化为 0 */
+void DFS(MGraph Graph, Vertex V, void (*VisitFunc)(MGraph, Vertex) );
+void BFS(MGraph Graph, Vertex V, void (*VisitFunc)(MGraph, Vertex) );
 /*
 
 MGraph CreateGraph(int VertexNum)

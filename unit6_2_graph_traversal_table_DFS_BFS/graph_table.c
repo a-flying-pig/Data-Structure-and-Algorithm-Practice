@@ -16,6 +16,7 @@ LGraph CreateGraph(int VertexNum)
 	Graph = (LGraph) malloc(sizeof(struct GNode));
 	Graph->Nv = VertexNum;
 	Graph->Ne = 0;
+	Graph->G = (AdjList) malloc(sizeof(struct Vnode) * VertexNum);
 	/* 初始化邻接表头指针 */
 	/* 注意：这里默认顶点编号从0开始，到（Graph->Nv - 1) */
 	for (V = 0; V < Graph->Nv; V++)
@@ -94,30 +95,10 @@ LGraph BuildGraphExist()
 {
 	LGraph Graph;
 	Edge E;
-	Vertex V;
-	int Nv, i;
-	//printf("please input the vertex number:\n");
-	//scanf("%d", &Nv); /* 读入顶点个数 */
-	//printf("the vertex number is :%d\n\n", Nv);
 	Graph = CreateGraph(6); /* 初始化有Nv个顶点但是没有边的图 */
-
-	//printf("please input the edge number:\n");
-	//scanf("%d", &(Graph->Ne)); /* 读入边数 */
-	//printf("the edge number is :%d\n\n", Graph->Ne);
 
 	Graph->Ne = 8;
 
-	//printf("please input the edge details:\n");
-	//if (Graph->Ne != 0) { /* 如果有边 */
-		//E = (Edge) malloc(sizeof(struct ENode)); /* 建立边结点 */
-		/* 读入边， 格式为“起点 终点 权重 ”，插入邻接表 */
-		//for (i = 0; i < Graph->Ne; i++) {
-			//scanf("%d %d %d", &E->V1, &E->V2, &E->Weight);
-			/* 注意：如果权重不是整型，Weight的读入格式要改 */
-			//printf("read edge, start:%d, end:%d, weight:%d\n", E->V1, E->V2, E->Weight);
-			//InsertEdge(Graph, E);
-		//}
-	//}
 	E = (Edge) malloc(sizeof(struct ENode)); /* 建立边结点 */
 	E->V1 = 0, E->V2 = 1, E->Weight = 1;
 	InsertEdge(Graph, E);
@@ -195,8 +176,6 @@ void DFS( LGraph Graph, Vertex V, void (*VisitFunc)(LGraph, Vertex))
 
 void BFS(LGraph Graph, Vertex V, void (*VisitFunc)(LGraph, Vertex))
 {
-
-    PtrToAdjVNode adjVNode = Graph->G[V].FirstEdge;
     // 访问该节点，然后添加到队列，以便出队列时寻找其邻接点
     VisitFunc(Graph, V);
     Graph->Visited[V] = 1;

@@ -16,11 +16,12 @@ LGraph CreateGraph(int VertexNum)
 	Graph = (LGraph) malloc(sizeof(struct GNode));
 	Graph->Nv = VertexNum;
 	Graph->Ne = 0;
+	Graph->G = (AdjList) malloc(sizeof(struct Vnode) * VertexNum);
+
 	/* 初始化邻接表头指针 */
 	/* 注意：这里默认顶点编号从0开始，到（Graph->Nv - 1) */
 	for (V = 0; V < Graph->Nv; V++)
 		Graph->G[V].FirstEdge = NULL;
-
 	return Graph;
 }
 

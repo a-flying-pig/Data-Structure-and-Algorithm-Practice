@@ -36,11 +36,18 @@ struct AdjVNode{
 };
 
 /* 顶点表头结点的定义 */
-typedef struct Vnode{
+//typedef struct Vnode{
+//	PtrToAdjVNode FirstEdge; /* 表头指针 */
+//    DataType Data;           /* 存顶点的数据 */
+//    /* 注意：很多情况下，定点无数据，此时Data可以不用出现 */
+//} AdjList[MaxVertexNum]; /* AdjList是邻接表类型 */
+
+typedef struct Vnode *AdjList; /* AdjList是邻接表类型 */
+struct Vnode{
 	PtrToAdjVNode FirstEdge; /* 表头指针 */
     DataType Data;           /* 存顶点的数据 */
     /* 注意：很多情况下，定点无数据，此时Data可以不用出现 */
-} AdjList[MaxVertexNum]; /* AdjList是邻接表类型 */
+};
 
 /* 图结点的定义 */
 typedef struct GNode *PtrToGNode;
