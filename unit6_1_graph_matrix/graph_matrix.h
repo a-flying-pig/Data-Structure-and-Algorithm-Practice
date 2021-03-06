@@ -24,8 +24,8 @@ typedef struct GNode *PtrToGNode;
 struct GNode{
 	int Nv; /* 顶点数 */
     int Ne; /* 边数 */
-    WeightType** G; /* 邻接矩阵 */
-    DataType* Data; /* 存顶点的数据 */
+    WeightType **G; /* 邻接矩阵 */
+    DataType *Data; /* 存顶点的数据 */
 //    WeightType G[MaxVertexNum][MaxVertexNum]; /* 邻接矩阵 */
 //    DataType Data[MaxVertexNum]; /* 存顶点的数据 */
     /* 注意：很多情况下，顶点无数据，此时Data[]可以不用出现 */

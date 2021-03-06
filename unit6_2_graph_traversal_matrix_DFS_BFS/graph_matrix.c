@@ -25,6 +25,11 @@ MGraph CreateGraph(int VertexNum)
 	for (V = 0; V < Graph->Nv; V++)
 		for (W = 0; W < Graph->Nv; W++)
 			Graph->G[V][W] = INFINITY;
+
+	Graph->Visited = (int*) malloc(sizeof(int) * VertexNum);
+	for (int i = 0; i < Graph->Nv; i++) {
+		Graph->Visited[i] = 0;
+	}
 	return Graph;
 }
 
@@ -142,4 +147,20 @@ void PrintGraph(MGraph graph)
 	}
 }
 
+void Visit(MGraph Graph, Vertex V) {
+	printf("visiting vertex:%d, data:%c\n", V, Graph->Data[V]);
+	Graph->Visited[V] = 1;
+}
 
+void DFS(MGraph Graph, Vertex V, void (*VisitFunc)(MGraph, Vertex)) {
+	VisitFunc(Graph, V);
+	for(int i = 0; i < Graph->Nv; i++) { // 找V的每个连通的顶点
+		if (Graph->G[V][i] != INFINITY) { // 该点是连通的
+			if (!Graph->Visited[i]) { // 如果没有访问过，去访问
+				DFS(Graph, i, VisitFunc);
+			}
+		}
+	}
+}
+
+// void BFS(MGraph Graph, Vertex V, void (*VisitFunc)(MGraph, Vertex));

@@ -55,7 +55,7 @@ struct GNode{
 	int Nv;     /* 顶点数 */
 	int Ne;     /* 边数 */
 	AdjList G;  /* 邻接表 */
-	int* Visited; /* 是否被访问过 */
+	int *Visited; /* 是否被访问过 */
 };
 
 typedef PtrToGNode LGraph; /* 以邻接表方式存储的图类型 */
@@ -68,8 +68,6 @@ LGraph BuildGraphExist();
 
 /* 访问顶点 */
 void Visit(LGraph Graph, Vertex V);
-
-/* Visited[]为全局变量，已经初始化为 0 */
 void DFS( LGraph Graph, Vertex V, void (*VisitFunc)(LGraph, Vertex) );
 void BFS( LGraph Graph, Vertex V, void (*VisitFunc)(LGraph, Vertex) );
 
