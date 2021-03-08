@@ -19,13 +19,13 @@ int main(int argc, char *argv[])
 //	PrintGraph(graph);
 //	printf("print graph end\n");
 
-	printf("\n visit the graph(DFS):\n");
-	DFS(graph, 0, Visit);
-	printf("\n visit the graph end \n");
-
-//	printf("\n visit the graph(BFS):\n");
-//	BFS(graph, 0, Visit);
+//	printf("\n visit the graph(DFS):\n");
+//	DFS(graph, 0, Visit);
 //	printf("\n visit the graph end \n");
+
+	printf("\n visit the graph(BFS):\n");
+	BFS(graph, 0, Visit);
+	printf("\n visit the graph end \n");
 
 	return 0;
 }

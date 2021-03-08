@@ -158,12 +158,12 @@ void PrintGraph(LGraph graph) {
 void Visit(LGraph Graph, Vertex V)
 {
 	printf("visiting vertex:%d, data:%c\n", V, Graph->G[V].Data);
+	 Graph->Visited[V] = 1;
 }
 
 void DFS( LGraph Graph, Vertex V, void (*VisitFunc)(LGraph, Vertex))
 {
 	VisitFunc(Graph, V);
-	Graph->Visited[V] = 1;
 	//if (V 的所有的连接点未被 访问过) {DFS}
 
 	for (PtrToAdjVNode node = Graph->G[V].FirstEdge; node != NULL; node = node->Next) {
@@ -178,7 +178,7 @@ void BFS(LGraph Graph, Vertex V, void (*VisitFunc)(LGraph, Vertex))
 {
     // 访问该节点，然后添加到队列，以便出队列时寻找其邻接点
     VisitFunc(Graph, V);
-    Graph->Visited[V] = 1;
+
 
     printf("\nenque the first node \n");
     Queue queue = createQueue();

@@ -5,6 +5,7 @@
  *      Author: Administrator
  */
 #include "graph_matrix.h"
+#include "LinkedQueue.h"
 
 
 MGraph CreateGraph(int VertexNum)
@@ -160,6 +161,24 @@ void DFS(MGraph Graph, Vertex V, void (*VisitFunc)(MGraph, Vertex)) {
 				DFS(Graph, i, VisitFunc);
 			}
 		}
+	}
+}
+
+void BFS(MGraph Graph, Vertex V, void (*VisitFunc)(MGraph, Vertex)) {
+	VisitFunc(Graph, V);
+	Queue queue = createQueue();
+	enque(queue, V);
+
+	while(!isEmpty(queue)) {
+	    Vertex vertex = deque(queue);
+	    for (int i = 0; i < Graph->Nv; i++) { // 邻接矩阵中的顶点
+	    	if (Graph->G[vertex][i] != INFINITY) { // 连通的顶点
+	    		if (!Graph->Visited[i]) { // 如果没有访问过，去访问
+	    			VisitFunc(Graph, i); // 访问
+	    			enque(queue, i); // 访问后的顶点加入队列
+	    		}
+	    	}
+	    }
 	}
 }
 
